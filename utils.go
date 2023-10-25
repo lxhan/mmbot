@@ -25,6 +25,9 @@ func setupGracefulShutdown(app *application) {
 
 func sendMessageToChannels(app *application, msg string) {
 	for _, channel := range app.channels {
+		if channel.Name == "town-square" {
+			continue
+		}
 		app.logger.Info().Str("channel", channel.Name).Msg("Sending message")
 		if _, _, err := app.client.CreatePost(&model.Post{
 			ChannelId: channel.Id,
